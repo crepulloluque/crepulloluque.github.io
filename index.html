@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carlos Repullo — Desarrollador Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0b0e;
+      --bg2: #111116;
+      --bg3: #18181f;
+      --border: rgba(255,255,255,0.07);
+      --amber: #f0a500;
+      --amber2: #ffc84a;
+      --text: #e8e6e0;
+      --muted: #7a7880;
+      --muted2: #a09ea8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── Grain overlay ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(11,11,14,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--amber); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted2);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── Section base ─── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    /* ─── Hero ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 80px;
+      max-width: 1100px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 .accent { color: var(--amber); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted2);
+      max-width: 560px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: #000;
+      padding: 0.8rem 1.8rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--amber2); transform: translateY(-1px); }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      padding: 0.8rem 1.8rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); color: var(--text); transform: translateY(-1px); }
+
+    .hero-scroll {
+      margin-top: 5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    /* ─── Section heading ─── */
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .section-intro {
+      color: var(--muted2);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ─── Divider ─── */
+    .divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    .divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 6rem 0;
+    }
+
+    /* ─── Proyectos en producción ─── */
+    .live-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .live-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-decoration: none;
+      transition: border-color 0.25s, transform 0.2s;
+      display: block;
+    }
+
+    .live-card:hover {
+      border-color: rgba(240,165,0,0.3);
+      transform: translateY(-3px);
+    }
+
+    .live-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .live-dot {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      color: #4ade80;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .live-dot::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .card-arrow {
+      color: var(--muted);
+      font-size: 1.2rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .live-card:hover .card-arrow { color: var(--amber); transform: translate(2px, -2px); }
+
+    .live-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .live-card p {
+      color: var(--muted2);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(240,165,0,0.1);
+      border: 1px solid rgba(240,165,0,0.2);
+      padding: 0.2rem 0.65rem;
+      border-radius: 3px;
+      margin-right: 0.4rem;
+    }
+
+    .card-tag.blue {
+      color: #60a5fa;
+      background: rgba(96,165,250,0.08);
+      border-color: rgba(96,165,250,0.2);
+    }
+
+    .card-tag.purple {
+      color: #c084fc;
+      background: rgba(192,132,252,0.08);
+      border-color: rgba(192,132,252,0.2);
+    }
+
+    /* ─── Workout3D featured ─── */
+    .featured-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      text-decoration: none;
+      transition: border-color 0.25s;
+    }
+
+    .featured-card:hover { border-color: rgba(240,165,0,0.35); }
+
+    .featured-badge {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .featured-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .featured-card p {
+      color: var(--muted2);
+      font-size: 0.95rem;
+      max-width: 480px;
+      margin-bottom: 1.5rem;
+    }
+
+    .featured-icon {
+      width: 100px;
+      height: 100px;
+      background: rgba(240,165,0,0.06);
+      border: 1px solid rgba(240,165,0,0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      flex-shrink: 0;
+    }
+
+    /* ─── Skills ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-group {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .skill-group h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--muted2);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.7rem;
+      border-radius: 3px;
+    }
+
+    /* ─── Sobre mí ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted2);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .about-text strong { color: var(--text); font-weight: 500; }
+
+    .stat-row {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1.25rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--amber);
+      line-height: 1;
+      min-width: 2.5rem;
+    }
+
+    .stat-desc {
+      color: var(--muted2);
+      font-size: 0.875rem;
+    }
+
+    /* ─── Contacto ─── */
+    #contacto {
+      padding-bottom: 8rem;
+    }
+
+    .contact-box {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3rem;
+      text-align: center;
+    }
+
+    .contact-box h2 { margin-bottom: 0.75rem; }
+
+    .contact-box p {
+      color: var(--muted2);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── Fade-in animation ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      section { padding: 0 1.5rem; }
+      .divider { padding: 0 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-icon { display: none; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">cr<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="mailto:crepulloluque@gmail.com" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.8rem;">
+      Contáctame
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-tag">Desarrollador Web · Granada, España</div>
+    <h1>Carlos<br>Repullo<br><span class="accent">Luque.</span></h1>
+    <p class="hero-sub">
+      Estudiante de 2º DAW apasionado del desarrollo full-stack.
+      Construyo webs reales para clientes reales — desde aplicaciones 3D
+      hasta sites WordPress en producción.
+    </p>
+    <div class="hero-actions">
+      <a href="#proyectos" class="btn-primary">Ver proyectos</a>
+      <a href="https://github.com/crepulloluque" target="_blank" rel="noopener" class="btn-ghost">GitHub →</a>
+      <a href="https://www.linkedin.com/in/carlos-repullo-luque-66653a3a9" target="_blank" rel="noopener" class="btn-ghost">LinkedIn →</a>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- PROYECTOS -->
+  <div class="divider"><hr></div>
+
+  <section id="proyectos">
+    <p class="section-label">Trabajo</p>
+    <h2>Proyectos</h2>
+    <p class="section-intro">Webs en producción y proyectos personales que demuestran mis habilidades.</p>
+
+    <!-- Workout3D destacado -->
+    <a href="https://github.com/crepulloluque/workout3d" target="_blank" rel="noopener" class="featured-card fade-up" style="margin-bottom: 1.25rem; text-decoration:none;">
+      <div>
+        <p class="featured-badge">★ Proyecto destacado</p>
+        <h3>Workout3D</h3>
+        <p>Aplicación para visualización y aprendizaje de ejercicios mediante modelos 3D interactivos. Pensada para hacer el entrenamiento más visual e intuitivo.</p>
+        <div>
+          <span class="card-tag">Java</span>
+          <span class="card-tag blue">JavaScript</span>
+          <span class="card-tag purple">MySQL</span>
+        </div>
+      </div>
+      <div class="featured-icon">🏋️</div>
+    </a>
+
+    <!-- Live sites -->
+    <div class="live-grid fade-up">
+      <a href="https://perdiendoelrumbocamper.com/" target="_blank" rel="noopener" class="live-card">
+        <div class="live-card-top">
+          <span class="live-dot">En vivo</span>
+          <span class="card-arrow">↗</span>
+        </div>
+        <h3>Perdiendo el Rumbo Camper</h3>
+        <p>Web para una empresa de alquiler de campers. Diseño, maquetación y puesta en producción completa.</p>
+        <span class="card-tag">WordPress</span>
+        <span class="card-tag blue">Cliente real</span>
+      </a>
+
+      <a href="http://laserimar.com/" target="_blank" rel="noopener" class="live-card">
+        <div class="live-card-top">
+          <span class="live-dot">En vivo</span>
+          <span class="card-arrow">↗</span>
+        </div>
+        <h3>Láser Imar</h3>
+        <p>Web corporativa para empresa del sector industrial. Desarrollo y despliegue en WordPress.</p>
+        <span class="card-tag">WordPress</span>
+        <span class="card-tag blue">Cliente real</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <div class="divider"><hr></div>
+
+  <section id="skills">
+    <p class="section-label">Tecnologías</p>
+    <h2>Skills</h2>
+    <p class="section-intro">Las herramientas con las que trabajo actualmente.</p>
+
+    <div class="skills-grid fade-up">
+      <div class="skill-group">
+        <h4>Backend</h4>
+        <div class="skill-pills">
+          <span class="pill">Java</span>
+          <span class="pill">MySQL</span>
+          <span class="pill">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Frontend</h4>
+        <div class="skill-pills">
+          <span class="pill">HTML5</span>
+          <span class="pill">CSS3</span>
+          <span class="pill">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>CMS</h4>
+        <div class="skill-pills">
+          <span class="pill">WordPress</span>
+          <span class="pill">Elementor</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Herramientas</h4>
+        <div class="skill-pills">
+          <span class="pill">Git</span>
+          <span class="pill">GitHub</span>
+          <span class="pill">VS Code</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE MÍ -->
+  <div class="divider"><hr></div>
+
+  <section id="sobre-mi">
+    <p class="section-label">Background</p>
+    <h2>Sobre mí</h2>
+
+    <div class="about-grid fade-up">
+      <div class="about-text">
+        <p>
+          Soy Carlos, desarrollador web en formación desde <strong>Granada</strong>.
+          Estudio <strong>Desarrollo de Aplicaciones Web (DAW)</strong> y llevo tiempo
+          aplicando lo aprendido en proyectos reales para clientes.
+        </p>
+        <p>
+          Me interesan especialmente el <strong>desarrollo full-stack</strong> y crear
+          experiencias web que funcionen de verdad. Disfruto tanto del backend con Java
+          y SQL como del frontend y la parte visual.
+        </p>
+        <p>
+          Cuando no estoy programando, busco proyectos con los que seguir aprendiendo
+          y construyendo cosas que tengan impacto real.
+        </p>
+      </div>
+      <div class="stat-row">
+        <div class="stat-item">
+          <span class="stat-num">2</span>
+          <span class="stat-desc">Webs en producción para clientes reales</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">2º</span>
+          <span class="stat-desc">Curso de DAW — Desarrollo de Aplicaciones Web</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">∞</span>
+          <span class="stat-desc">Ganas de seguir aprendiendo y construyendo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <div class="divider"><hr></div>
+
+  <section id="contacto">
+    <div class="contact-box fade-up">
+      <h2>¿Hablamos?</h2>
+      <p>Abierto a colaboraciones, proyectos freelance y oportunidades.</p>
+      <div class="contact-links">
+        <a href="mailto:crepulloluque@gmail.com" class="btn-primary">crepulloluque@gmail.com</a>
+        <a href="https://www.linkedin.com/in/carlos-repullo-luque-66653a3a9" target="_blank" rel="noopener" class="btn-ghost">LinkedIn →</a>
+        <a href="https://github.com/crepulloluque" target="_blank" rel="noopener" class="btn-ghost">GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Carlos Repullo Luque · Hecho a mano, con intención.</p>
+  </footer>
+
+  <!-- JS: fade-in on scroll -->
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
