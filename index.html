@@ -33,7 +33,6 @@
       overflow-x: hidden;
     }
 
-    /* ─── Grain overlay ─── */
     body::before {
       content: '';
       position: fixed;
@@ -50,44 +49,108 @@
       top: 0;
       width: 100%;
       z-index: 100;
-      padding: 1.25rem 2.5rem;
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(11,11,14,0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1100px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(11,11,14,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 0;
     }
 
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 1.05rem;
       letter-spacing: -0.02em;
       color: var(--text);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex: 1;
     }
 
-    .nav-logo span { color: var(--amber); }
+    .nav-logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, var(--amber), var(--amber2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #1a1208;
+      flex-shrink: 0;
+    }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      align-items: center;
+      gap: 0.2rem;
       list-style: none;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.3rem;
     }
 
     .nav-links a {
       color: var(--muted2);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.83rem;
       font-weight: 400;
-      letter-spacing: 0.03em;
-      transition: color 0.2s;
+      letter-spacing: 0.02em;
+      padding: 0.45rem 1.05rem;
+      border-radius: 100px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
     }
 
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.07);
+    }
 
-    /* ─── Section base ─── */
+    .nav-social {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    .nav-icon-link {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted2);
+      transition: color 0.2s, border-color 0.2s, transform 0.2s, background 0.2s;
+    }
+
+    .nav-icon-link:hover {
+      color: var(--amber);
+      border-color: rgba(240,165,0,0.4);
+      background: rgba(240,165,0,0.06);
+      transform: translateY(-2px);
+    }
+
+    .nav-icon-link svg { width: 16px; height: 16px; }
+
     section {
       position: relative;
       z-index: 1;
@@ -96,7 +159,6 @@
       padding: 0 2.5rem;
     }
 
-    /* ─── Hero ─── */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -204,7 +266,6 @@
       background: var(--muted);
     }
 
-    /* ─── Section heading ─── */
     .section-label {
       font-size: 0.75rem;
       letter-spacing: 0.15em;
@@ -240,7 +301,6 @@
       margin-bottom: 3.5rem;
     }
 
-    /* ─── Divider ─── */
     .divider {
       max-width: 1100px;
       margin: 0 auto;
@@ -253,7 +313,6 @@
       margin: 6rem 0;
     }
 
-    /* ─── Proyectos en producción ─── */
     .live-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -357,7 +416,6 @@
       border-color: rgba(192,132,252,0.2);
     }
 
-    /* ─── Workout3D featured ─── */
     .featured-card {
       background: var(--bg3);
       border: 1px solid var(--border);
@@ -411,7 +469,6 @@
       flex-shrink: 0;
     }
 
-    /* ─── Skills ─── */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -451,7 +508,6 @@
       border-radius: 3px;
     }
 
-    /* ─── Sobre mí ─── */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -498,7 +554,6 @@
       font-size: 0.875rem;
     }
 
-    /* ─── Contacto ─── */
     #contacto {
       padding-bottom: 8rem;
     }
@@ -526,7 +581,6 @@
       flex-wrap: wrap;
     }
 
-    /* ─── Footer ─── */
     footer {
       position: relative;
       z-index: 1;
@@ -538,7 +592,6 @@
       letter-spacing: 0.03em;
     }
 
-    /* ─── Fade-in animation ─── */
     .fade-up {
       opacity: 0;
       transform: translateY(24px);
@@ -550,9 +603,9 @@
       transform: translateY(0);
     }
 
-    /* ─── Responsive ─── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
+      nav { padding: 0 1.25rem; }
+      .nav-inner { padding: 0.75rem 0; }
       section { padding: 0 1.5rem; }
       .divider { padding: 0 1.5rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -564,21 +617,32 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
-    <a href="#" class="nav-logo">cr<span>.</span></a>
-    <ul class="nav-links">
-      <li><a href="#proyectos">Proyectos</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#sobre-mi">Sobre mí</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-    <a href="mailto:crepulloluque@gmail.com" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.8rem;">
-      Contáctame
-    </a>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-mark">CR</span>
+        Carlos Repullo
+      </a>
+      <ul class="nav-links">
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <div class="nav-social">
+        <a href="https://github.com/crepulloluque" target="_blank" rel="noopener" class="nav-icon-link" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577 0-.286-.01-1.04-.016-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.776.42-1.305.762-1.605-2.665-.303-5.466-1.332-5.466-5.93 0-1.31.469-2.38 1.236-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.5 11.5 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.652.242 2.873.118 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.804 5.624-5.475 5.92.43.372.823 1.103.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.216.694.825.576C20.565 21.795 24 17.298 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/carlos-repullo-luque-66653a3a9" target="_blank" rel="noopener" class="nav-icon-link" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 11.001-4.124 2.062 2.062 0 01-.001 4.124zM7.114 20.452H3.557V9h3.557v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="mailto:crepulloluque@gmail.com" class="nav-icon-link" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
     <div class="hero-tag">Desarrollador Web · Málaga, España</div>
     <h1>Carlos<br>Repullo<br><span class="accent">Luque.</span></h1>
@@ -595,7 +659,6 @@
     <div class="hero-scroll">Scroll</div>
   </section>
 
-  <!-- PROYECTOS -->
   <div class="divider"><hr></div>
 
   <section id="proyectos">
@@ -603,7 +666,6 @@
     <h2>Proyectos</h2>
     <p class="section-intro">Webs en producción y proyectos personales que demuestran mis habilidades.</p>
 
-    <!-- Workout3D destacado -->
     <a href="https://github.com/crepulloluque/workout3d" target="_blank" rel="noopener" class="featured-card fade-up" style="margin-bottom: 1.25rem; text-decoration:none;">
       <div>
         <p class="featured-badge">★ Proyecto destacado</p>
@@ -618,7 +680,6 @@
       <div class="featured-icon">🏋️</div>
     </a>
 
-    <!-- Live sites -->
     <div class="live-grid fade-up">
       <a href="https://perdiendoelrumbocamper.com/" target="_blank" rel="noopener" class="live-card">
         <div class="live-card-top">
@@ -631,7 +692,7 @@
         <span class="card-tag blue">Cliente real</span>
       </a>
 
-      <a href="http://laserimar.com/" target="_blank" rel="noopener" class="live-card">
+      <a href="http://laserimar.es/" target="_blank" rel="noopener" class="live-card">
         <div class="live-card-top">
           <span class="live-dot">En vivo</span>
           <span class="card-arrow">↗</span>
@@ -644,7 +705,6 @@
     </div>
   </section>
 
-  <!-- SKILLS -->
   <div class="divider"><hr></div>
 
   <section id="skills">
@@ -687,7 +747,6 @@
     </div>
   </section>
 
-  <!-- SOBRE MÍ -->
   <div class="divider"><hr></div>
 
   <section id="sobre-mi">
@@ -728,7 +787,6 @@
     </div>
   </section>
 
-  <!-- CONTACTO -->
   <div class="divider"><hr></div>
 
   <section id="contacto">
@@ -743,12 +801,10 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>© 2026 Carlos Repullo Luque · Hecho a mano, con intención.</p>
   </footer>
 
-  <!-- JS: fade-in on scroll -->
   <script>
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
